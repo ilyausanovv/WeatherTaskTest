@@ -1,25 +1,29 @@
 package ru.stud.kpfu.usanov.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import ru.stud.kpfu.usanov.repository.UserRepository;
+import ru.stud.kpfu.usanov.dto.CreateUserDto;
 
-import java.util.Optional;
-
-@RestController
+@Controller
 public class HelloController {
 
-    private final UserRepository userRepository;
-
-    @Autowired
-    public HelloController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    @GetMapping("")
+    public String getIndexPage() {
+        return "index";
     }
 
-    @GetMapping("/hello")
-    public String hello(@RequestParam Optional<String> name){
-        return String.format("Hello, %s!", name.orElse("name"));
+    @GetMapping("/sign_up")
+    public String getSignUp(Model model) {
+        model.addAttribute("user", new CreateUserDto());
+
+        return "sign_up";
     }
+
+    @GetMapping("/home")
+    public String getHome() {
+        return "home";
+    }
+
+
 }

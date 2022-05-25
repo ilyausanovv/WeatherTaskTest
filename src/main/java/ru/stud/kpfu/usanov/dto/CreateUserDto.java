@@ -12,6 +12,13 @@ public class CreateUserDto {
     @NotBlank(message = "Password shouldn't be blank!")
     private String password;
 
+    public CreateUserDto() {
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
@@ -20,13 +27,20 @@ public class CreateUserDto {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public CreateUserDto(String name, String email, String password) {
         this.name = name;
         this.email = email;
-        this.password = password;
     }
 }

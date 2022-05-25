@@ -15,6 +15,9 @@ public class Weather {
     private String city;
     private String email;
 
+    @OneToOne(mappedBy = "weather", cascade = CascadeType.ALL)
+    private Appeal appeal;
+
     public Weather() {
     }
 
@@ -65,6 +68,15 @@ public class Weather {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Appeal getAppeal() {
+        return appeal;
+    }
+
+    public void setAppeal(Appeal appeal) {
+        this.appeal = appeal;
+    }
+
 
     public Weather(String description, String humidity, String temp, String city, String email) {
         this.description = description;

@@ -7,6 +7,7 @@ import ru.stud.kpfu.usanov.dto.UserDto;
 import ru.stud.kpfu.usanov.helper.PasswordHelper;
 import ru.stud.kpfu.usanov.model.User;
 import ru.stud.kpfu.usanov.repository.UserRepository;
+import ru.stud.kpfu.usanov.service.UserService;
 
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -15,28 +16,25 @@ import javax.validation.Valid;
 @RestController
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/user")
     public Iterable<UserDto> getAll() {
-        return userRepository.findAll().stream().map(UserDto::fromModel).collect(Collectors.toList());
+        return userService.getAll();
     }
 
     @GetMapping("/user/{id}")
     public UserDto get(@PathVariable Integer id) {
-        User user = userRepository.findById(id).orElse(new User("ilya",
-                "gamer@mail.ru", "111"));
-        return UserDto.fromModel(user);
+        return userService.getById(id);
     }
 
     @PostMapping("/user")
     public UserDto createUser(@Valid @RequestBody CreateUserDto user) {
-        return UserDto.fromModel(userRepository.save(new User(user.getName(), user.getEmail(),
-                PasswordHelper.encrypt(user.getPassword()))));
+        return userService.save(user);
     }
 }
